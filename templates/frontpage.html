@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="css/main.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<p>
+    <h1>Forum</h1>
+    <nav>
+      <ul>
+        <li><a href="/">frontpage</a></li>
+        <li><a href="/vote">vote</a></li>
+        <li><a href="/login">login</a></li>
+        <li><a href="/register">register</a></li>
+        <li><a href="/admin">admin page</a></li>
+    </ul>
+    </nav>
+
+    <p>
+        text text text text
+    </p>
+
+    <div class="row">
+		<div class="col-8">
+			<h1 class="display-5">Threads</h1>
+		</div>
+
+		<div class="col-4">
+			<a style="float: right; margin-top: 10px" href="/newthread">
+				<button type="button" class="btn btn-primary">Create a new thread</button>
+			</a>
+		</div>
+	</div>
+
+    {% for thread in threads %}
+    Thread:  <a href="/thread/{{ thread[4] }}"> {{ thread[0] }} </a>
+    <p>
+    Created at:  {{ thread.createdat }}
+    <p>
+    Creator: {{ thread[2] }}
+    <p>
+
+    
+    {% endfor %}
+    
+</p>

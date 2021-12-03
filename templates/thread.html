@@ -1,0 +1,14 @@
+{{ threadtopic }}
+<p>
+
+<ul>
+{% for message in messages %}
+<li>
+    {{ message.message }}
+</li>
+{% endfor %}
+</ul>
+<hr>
+<a href="/">Go back</a>
+
+

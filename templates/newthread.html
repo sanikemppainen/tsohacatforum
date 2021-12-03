@@ -1,0 +1,17 @@
+
+{% if session.userid %}
+Create a new thread by sending the first message:
+
+<form action="/send" method="POST">
+    Message:<br>
+    <textarea name="content" rows="5" cols="50"></textarea>
+    <br>
+    Add a tag:
+    <!-- add functionality to add a tag-->
+    <input type="submit" value="Send the first message">
+</form>
+
+{% else %}
+<a href="/login">Login before sending a message</a>
+
+{% endif %}
