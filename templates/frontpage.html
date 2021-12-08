@@ -29,12 +29,13 @@
 		</div>
 	</div>
 
+    <!--SELECT id, topic, userid, createdat-->
     {% for thread in threads %}
-    Thread:  <a href="/thread/{{ thread[4] }}"> {{ thread[0] }} </a>
+    Thread:  <a href="/thread/{{ thread.id }}"> {{ thread.topic }} </a>
     <p>
     Created at:  {{ thread.createdat }}
     <p>
-    Creator: {{ thread[2] }}
+    Creator: {{ thread.username }}
     <p>
 
     

@@ -6,13 +6,15 @@ def userid():
     return session.get("userid",0)
 
 def login(username, password):
-    result=database.session.execute("SELECT id, password FROM Users WHERE username=:username", {"username":username})
+    result=database.session.execute("SELECT id, username, password, admin FROM Users WHERE username=:username", {"username":username})
     user=result.fetchone()
     if not user:
         return False
     else:
         if check_password_hash(user.password, password):
             session["userid"]=user.id
+            session["admin"]=user.admin
+            #csfr token
             return True
         else:
             return False
@@ -25,6 +27,11 @@ def register(username, password):
     except:
         return False
     return login(username, password)
+
+def admincheck():
+    if session["admin"]==1:
+        return True
+    return False
 
 def logout():
     del session["userid"]

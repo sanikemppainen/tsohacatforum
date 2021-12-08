@@ -13,32 +13,27 @@ CREATE TABLE Users (
 	admin INTEGER
 );
 
+CREATE TABLE Threads (
+	id SERIAL PRIMARY KEY,
+	topic TEXT,
+	username TEXT,
+	userid INTEGER REFERENCES Users,
+	createdat TIMESTAMP,
+	tags TEXT
+);
+
 CREATE TABLE Messages (
 	id SERIAL PRIMARY KEY,
 	message TEXT,
-	threadid INTEGER,
-	pictureid INTEGER REFERENCES Pictures,
 	userid INTEGER REFERENCES Users,
+	threadid INTEGER REFERENCES Threads,
+	username TEXT,
 	sentat TIMESTAMP
 );
 
 CREATE TABLE Votes (
 	id SERIAL PRIMARY KEY,
+	nameofphoto TEXT,
 	votes INTEGER
 );
 
-CREATE TABLE Threads (
-	id SERIAL PRIMARY KEY,
-	topic TEXT,
-	userid INTEGER REFERENCES Users,
-	createdat TIMESTAMP,
-	tags TEXT,
-	messageids INTEGER REFERENCES Messages
-);
-
-CREATE TABLE ThreadLikes (
-	id SERIAL PRIMARY KEY,
-	threadid INTEGER REFERENCES Threads,
-	votes INTEGER,
-	userid INTEGER UNIQUE
-);

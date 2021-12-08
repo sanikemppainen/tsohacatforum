@@ -7,14 +7,15 @@ import threads, users, messages
 @app.route("/")
 def frontpage():
 	list=threads.getlist()
+	count=len(list)
 	return render_template("frontpage.html", threads=list)
 
 @app.route("/send", methods=["POST"])
 def send():
 	content=request.form["content"]
 	threadid=request.form["threadid"]
-	userid=request.form["userid"]
-	if messages.addmessage(content, threadid, userid):
+	username=request.form["username"]
+	if messages.addmessage(content, threadid, username):
 		return redirect("/")
 	else:
 		return render_template("error.html", message="Couldn't send the message")
@@ -61,6 +62,7 @@ def newthread():
 
 
 @app.route("/thread/<int:id>")
+# tee tästä samanlainen kun get list eli ota kaikki tarvittava listalle, sama kun frontpagella threadien näytössä
 def thread(id):
 	list=threads.getid(id)
 	return render_template("thread.html", threadtopic=list[0], messages=list[1])

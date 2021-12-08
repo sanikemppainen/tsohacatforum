@@ -12,16 +12,18 @@ def send(topic):
 	return True
 
 #lisää että näkee montako threadia on yhteensä
-#lisää että näkee tykkäykset 
+#lisää että näkee mikä on eniten komentoitu ja järjestykset?
 def getlist():
-	#result=database.session.execute("SELECT T.topic, T.createdat, U.username, T.messageids, T.id FROM Threads T, Users U ORDER BY T.id")
-	result=database.session.execute("SELECT T.topic, T.createdat, U.username, T.messageids, T.id FROM Threads T, Users U ORDER BY T.id")
-	return result.fetchall()
+	sql="SELECT id, topic, username, createdat, tags FROM Threads ORDER BY id DESC"
+	results=database.session.execute(sql)
+	allthreads=results.fetchall()
+	return allthreads
 
 def getid(id):
 	result=database.session.execute("SELECT topic FROM Threads WHERE id=:id", {"id":id})
 	threadtopic=result.fetchone()[0]
-	result2=database.session.execute("SELECT  message FROM Messages", {"threadid": id})
+	result2=database.session.execute("SELECT message FROM Messages JOIN Threads ON Messages.threadid = Threads.id")
 	messages=result2.fetchall()
+	print(messages)
 	list=[threadtopic, messages]
 	return list
