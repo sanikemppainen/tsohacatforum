@@ -3,12 +3,14 @@ import flask_sqlalchemy
 from database import database
 import users, threads
 
-def addmessagetothread(content):
+
+def addmessagetothread(message):
     userid=users.userid()
-    threadid=threads.getid()
+    #threadid=threads.returnthreadid()
+    threadid=1
     if userid==0:
         return False
-    database.session.execute("INSERT INTO Messages (content, threadid, userid, sentat) VALUES (:content, :threadid, :userid, NOW())", {"content": content, "threadid": threadid, "userid": userid})
+    database.session.execute("INSERT INTO Messages (message, threadid, userid, sentat) VALUES (:message, :threadid, :userid, NOW())", {"message": message, "threadid": threadid, "userid": userid})
     database.session.commit()
     return True
 

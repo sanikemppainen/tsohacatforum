@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, sessions
+from flask import render_template, request, redirect, session, url_for
 from app import app
 from os import getenv
 import threads, users, messages
@@ -20,7 +20,6 @@ def send():
 	else:
 		return render_template("error.html", message="Couldn't send the message")
 
-
 #@app.route("/send", methods=["POST"])
 #def send():
 #	topic=request.form["topic"]
@@ -36,6 +35,7 @@ def login():
 	else:
 		username=request.form["username"]
 		password=request.form["password"]
+		#session["csrf_token"]=secrets.token_hex(16)
 		if users.login(username, password):
 			return redirect("/")
 		else:
@@ -61,13 +61,34 @@ def newthread():
 	return render_template("newthread.html")
 
 
-@app.route("/thread/<int:id>")
-# tee tästä samanlainen kun get list eli ota kaikki tarvittava listalle, sama kun frontpagella threadien näytössä
+@app.route("/thread/<int:id>", methods=["GET", "POST"])
 def thread(id):
-	list=threads.getid(id)
-	return render_template("thread.html", threadtopic=list[0], messages=list[1])
+	if request.method=="GET":
+		list=threads.getid(id)
+		return render_template("thread.html", threadtopic=list[0], messages=list[1], threadid=id)
+	else:
+		#if liian pitkä kato osa 4 älä laita viestiä databaseewn
+		#check sentmessage ja topic
+		sentmessage=request.form["sentmessage"]
+		threadid=id
+		list=threads.getid(id)
+		messages.addmessagetothread(sentmessage)
+		return render_template("thread.html", threadtopic=list[0], messages=list[1], threadid=id)
+		
 
 @app.route("/logout")
 def logout():
 	users.logout()
-	return redirect("/")
+	return render_template("logout.html")
+
+@app.route("/admin")
+def admin():
+	#return render_template("admin.html")
+	if users.admincheck():
+		return render_template("admin.html", message="now you can delete stuff")
+	else:
+		return render_template("admin.html", message=" no rights here")
+
+@app.route("/vote")
+def vote():
+	return render_template("vote.html")

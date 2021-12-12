@@ -1,44 +1,40 @@
 <!DOCTYPE html>
-<!--link rel="stylesheet" href="css/main.css"-->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<p>
-    <h1>Forum</h1>
-    <nav>
-      <ul>
-        <li><a href="/">frontpage</a></li>
-        <li><a href="/vote">vote</a></li>
-        <li><a href="/login">login</a></li>
-        <li><a href="/register">register</a></li>
-        <li><a href="/admin">admin page</a></li>
-    </ul>
-    </nav>
+{% extends "layout.html" %}
+{% block title %}Frontpage{% endblock %}
 
-    <p>
-        text text text text
-    </p>
-
-    <div class="row">
-		<div class="col-8">
-			<h1 class="display-5">Threads</h1>
-		</div>
-
-		<div class="col-4">
-			<a style="float: right; margin-top: 10px" href="/newthread">
-				<button type="button" class="btn btn-primary">Create a new thread</button>
-			</a>
-		</div>
+<body>
+ {% block content %}
+ <div class="introtext">
+    text text text text text text text text text text text text
+ </div>
+ 
+ <div class="newthreadbutton">
+		<a href="/newthread">
+			<button type="button">Create a new thread</button>
+		</a>
 	</div>
 
-    <!--SELECT id, topic, userid, createdat-->
-    {% for thread in threads %}
-    Thread:  <a href="/thread/{{ thread.id }}"> {{ thread.topic }} </a>
-    <p>
-    Created at:  {{ thread.createdat }}
-    <p>
-    Creator: {{ thread.username }}
-    <p>
+  <div class="threads">
+		<h2>Threads</h2>
+	</div>
 
+  <!--SELECT id, topic, userid, createdat-->
     
-    {% endfor %}
-    
+    {% for thread in threads %}
+    <div class=threadblock>
+      <p>
+      Thread:  <a href="/thread/{{ thread.id }}"> {{ thread.topic }} </a>
+      <p>
+      Created at:  {{ thread.createdat }}
+      <p>
+      Creator: {{ thread.username }}
+      <p>
+    </div> 
+    {% endfor %}   
+  
 </p>
+<div class="logout">
+  You can logout <a href="/logout">here</a>
+</div>
+{% endblock %}
+</body>

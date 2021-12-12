@@ -4,10 +4,29 @@
 <ul>
 {% for message in messages %}
 <li>
-    {{ message.message }}
+    {{ message.message }} 
+    <p>
+    {{ message.username }}
+    <p>
+    {{ message.sentat }}
 </li>
 {% endfor %}
 </ul>
 <hr>
-<a href="/">Go back</a>
 
+{% if session.userid %}
+<form action="/thread/{{threadid}}" method="POST">
+<p>Add a new message to thread: {{ threadid }}<br>
+    
+    <textarea name="sentmessage" rows="5" cols="50"></textarea>
+<input type="submit" value="Send">
+</form>
+{% else %}
+
+<br>
+You can only send a message if you're a registered user.
+If you don't have an account, you can create one <a href="/register">here</a>
+{% endif %}
+
+<hr>
+<a href="/">Return to frontpage</a>
