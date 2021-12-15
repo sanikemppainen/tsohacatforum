@@ -17,7 +17,6 @@
 {% if session.userid %}
 <form action="/thread/{{threadid}}" method="POST">
 <p>Add a new message to thread: {{ threadid }}<br>
-    
     <textarea name="sentmessage" rows="5" cols="50"></textarea>
 <input type="submit" value="Send">
 </form>

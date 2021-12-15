@@ -1,16 +1,19 @@
 from flask import session
 from database import database
-import users
+import users, messages
 
-def send(topic):
+def send(topic, tags, message):
 	#jos threadia ei vielä ole, luo uusi ja lähetä sinne eka viesti
 	# userid=users.userid(), if userid==0; return false
 	userid=users.userid()
 	if userid==0:
 		return False
-	database.session.execute("INSERT INTO threads (topic, userid, createdat) VALUES (:topic, :userid, NOW())", {"topic":topic, "userid":userid})
+	tags=tags
+	database.session.execute("INSERT INTO threads (topic, userid, createdat, tags) VALUES (:topic, :userid, NOW(), :tags)", {"topic":topic, "userid":userid, "tags":tags})
 	database.session.commit()
-	
+	getthreadid=database.session.execute("SELECT id FROM Threads WHERE topic=:topic", {"topic":topic})
+	threadid=getthreadid.fetchone()[0]
+	messages.addmessagetothread(message, threadid)	
 	return True
 
 #lisää että näkee montako threadia on yhteensä
@@ -22,6 +25,7 @@ def getlist():
 	#session["id"]=allthreads.id
 	return allthreads
 
+#nimeä paremmin
 def getid(id):
 	result=database.session.execute("SELECT topic, id FROM Threads WHERE id=:id", {"id":id})
 	threadtopic=result.fetchone()[0]
@@ -33,3 +37,8 @@ def getid(id):
 
 def returnthreadid():
     return session.get("threadid",0)
+
+def gettags():
+	results=database.session.execute("SELECT tags FROM Threads")
+	alltags=results.fetchall()
+	return alltags

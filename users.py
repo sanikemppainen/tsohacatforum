@@ -14,6 +14,8 @@ def login(username, password):
         if check_password_hash(user.password, password):
             session["userid"]=user.id
             session["admin"]=user.admin
+            session["username"]=user.username
+
             #csfr token
             return True
         else:

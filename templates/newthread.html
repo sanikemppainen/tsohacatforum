@@ -1,18 +1,29 @@
 {% extends "layout.html" %}
-{% block title %}Login{% endblock %}
+{% block title %}New Thread{% endblock %}
 
 {% block content %}
 {% if session.userid %}
 
 <div class="newthreadmessage">
     Create a new thread by sending the first message:
+    <p></p>
 </div>
 
-<form action="/send" method="POST">
-    Message:<br>
-    <textarea name="content" rows="5" cols="50"></textarea>
+<form action="/newthread" method="POST">
+    Thread Topic: <input type="text" name="threadtopic">
+    <p>
+    Message:
+    <p>
+    <textarea name="threadmessage" rows="5" cols="50"></textarea>
     <br>
     Add a tag:
+    <Select name="tag">
+    <div class="dropdown">
+        {% for tag in taglist %}
+            <option value={{tag.tag}}>{{tag.tag}}</option>
+        {% endfor %}
+    </Select>
+    </div>
     <p>
     <!-- add functionality to add a tag-->
     <input type="submit" value="Send the first message">

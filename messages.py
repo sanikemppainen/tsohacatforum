@@ -4,10 +4,10 @@ from database import database
 import users, threads
 
 
-def addmessagetothread(message):
+def addmessagetothread(message, id):
     userid=users.userid()
     #threadid=threads.returnthreadid()
-    threadid=1
+    threadid=id
     if userid==0:
         return False
     database.session.execute("INSERT INTO Messages (message, threadid, userid, sentat) VALUES (:message, :threadid, :userid, NOW())", {"message": message, "threadid": threadid, "userid": userid})

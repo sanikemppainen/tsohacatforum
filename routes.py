@@ -56,10 +56,19 @@ def register():
 		else:
 			return render_template("error.html", message="Registeration failed, try again")
 
-@app.route("/newthread")
+@app.route("/newthread", methods=["GET", "POST"])
 def newthread():
-	return render_template("newthread.html")
-
+	if request.method=="GET":
+		taglist=threads.gettags()
+		return render_template("newthread.html", taglist=taglist)
+	else:
+		#ota tiedot, lisää threads databaseen, ohjaa etusivulle
+		threadtopic=request.form["threadtopic"]
+		threadmessage=request.form["threadmessage"]
+		tags=request.form.get("tag")
+		#username=session.username
+		threads.send(threadtopic, tags, threadmessage )
+		return redirect("/")	
 
 @app.route("/thread/<int:id>", methods=["GET", "POST"])
 def thread(id):
@@ -71,10 +80,10 @@ def thread(id):
 		#check sentmessage ja topic
 		sentmessage=request.form["sentmessage"]
 		threadid=id
-		list=threads.getid(id)
-		messages.addmessagetothread(sentmessage)
+		messages.addmessagetothread(sentmessage, threadid)
+		list=threads.getid(id)		
 		return render_template("thread.html", threadtopic=list[0], messages=list[1], threadid=id)
-		
+		#return redirect("/thread/<int:id>")
 
 @app.route("/logout")
 def logout():
