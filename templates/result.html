@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block title %}Result{% endblock %}
+
+{% block content %}
+<div class="result">
+   The cutest cat with {{ votes }} is {{ nameofphoto }}
+   <image src="{{ photourl }}"></image>
+</div>
+{% endblock %}

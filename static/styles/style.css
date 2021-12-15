@@ -51,20 +51,6 @@ nav ul{
     background-color: beige;
     margin-bottom: 1em;
 }
- /* ei toimi?
-.loginclass{
-    display: grid;
-    max-width: 15em;
-    grid-template-columns: 5em 10em;
-    grid-row-gap: .5em;
-    justify-items: center;
-    align-items: center;
-}
-.loginclass #username{
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 1.2em;
-}
-*/
  
 .logout{
     font-size: 1.2em;
@@ -118,6 +104,13 @@ nav ul{
     font-size: 1.2em;
     text-align: center;
 }
+.votephoto1{
+    content: url(/static/images/votecat1.jpg);
+    align-content: center;
+    max-width: 400px;
+    max-height: 600px;
+}
+
 .newthreadlogin {
     font-family: 'Times New Roman', Times, serif;
     font-size: 1.2em;
@@ -133,4 +126,35 @@ nav ul{
 .newthreadmessage{
     font-family: 'Times New Roman', Times, serif;
     font-size: 1.2em;
+}
+.catchoices{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.2em;
+    text-align: center;
+    padding: 1em;
+}
+.result{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.2em;
+    text-align: center;
+}
+.threadtopic{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.6em;
+}
+
+.threadmessages{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1em;
+    text-align: left;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    background-color: beige;
+    margin-bottom: 1em;
+   overflow-wrap: break-word;
+}
+.threadmessages label#sentat {
+    align-items: right;
+    text-align: right;
 }

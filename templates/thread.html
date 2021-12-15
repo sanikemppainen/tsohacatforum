@@ -1,18 +1,29 @@
-{{ threadtopic }}
-<p>
+{% extends "layout.html" %}
+{% block title %}Error{% endblock %}
 
-<ul>
+{% block content %}
+
+<div class="threadtopic">
+    {{ threadtopic }}
+<p>
+</div>
+
 {% for message in messages %}
-<li>
-    {{ message.message }} 
-    <p>
-    {{ message.username }}
-    <p>
-    {{ message.sentat }}
-</li>
-{% endfor %}
-</ul>
-<hr>
+    <div class="threadmessages">
+        <ul>
+            <li>
+            <label id="message">{{ message.message }}</label>
+            <p>
+            <label id="username">{{ message.username }}</label>
+            <p>
+            <label id="sentat">{{ message.sentat }}</label>
+            </li>
+        </ul>
+    </div>
+    {% endfor %}
+    <hr>    
+
+
 
 {% if session.userid %}
 <form action="/thread/{{threadid}}" method="POST">
@@ -29,3 +40,5 @@ If you don't have an account, you can create one <a href="/register">here</a>
 
 <hr>
 <a href="/">Return to frontpage</a>
+
+{% endblock %}

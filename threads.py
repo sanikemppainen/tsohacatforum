@@ -19,10 +19,9 @@ def send(topic, tags, message):
 #lisää että näkee montako threadia on yhteensä
 #lisää että näkee mikä on eniten komentoitu ja järjestykset?
 def getlist():
-	sql="SELECT id, topic, username, createdat, tags FROM Threads ORDER BY id DESC"
+	sql="SELECT id, topic, userid, createdat, tags FROM Threads ORDER BY id DESC"
 	results=database.session.execute(sql)
 	allthreads=results.fetchall()
-	#session["id"]=allthreads.id
 	return allthreads
 
 #nimeä paremmin

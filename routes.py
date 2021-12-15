@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, session, url_for
 from app import app
 from os import getenv
-import threads, users, messages
+import threads, users, messages, vote
 
 
 @app.route("/")
@@ -20,14 +20,6 @@ def send():
 	else:
 		return render_template("error.html", message="Couldn't send the message")
 
-#@app.route("/send", methods=["POST"])
-#def send():
-#	topic=request.form["topic"]
-#	if threads.send(topic):
-#		return redirect("/")
-#	else:
-#		return render_template("error.html", message="Couldn't create a thread. Please make sure you are logged in.")
-
 @app.route("/login", methods=["GET","POST"])
 def login():
 	if request.method=="GET":
@@ -35,7 +27,6 @@ def login():
 	else:
 		username=request.form["username"]
 		password=request.form["password"]
-		#session["csrf_token"]=secrets.token_hex(16)
 		if users.login(username, password):
 			return redirect("/")
 		else:
@@ -83,21 +74,29 @@ def thread(id):
 		messages.addmessagetothread(sentmessage, threadid)
 		list=threads.getid(id)		
 		return render_template("thread.html", threadtopic=list[0], messages=list[1], threadid=id)
-		#return redirect("/thread/<int:id>")
 
 @app.route("/logout")
 def logout():
-	users.logout()
-	return render_template("logout.html")
+	if users.userid()==0:
+		return render_template("error.html", message="Can't logout before logging in")
+	else:
+		users.logout()
+		return render_template("logout.html")
 
 @app.route("/admin")
 def admin():
-	#return render_template("admin.html")
 	if users.admincheck():
 		return render_template("admin.html", message="now you can delete stuff")
 	else:
-		return render_template("admin.html", message=" no rights here")
+		return render_template("error.html", message="no rights here")
 
-@app.route("/vote")
+@app.route("/vote", methods=["GET", "POST"])
 def vote():
-	return render_template("vote.html")
+	if request.method=="GET":
+		return render_template("vote.html")
+	else:
+		nameofphoto=request.form["answer"]
+		#vote.putvotes(nameofphoto)
+		#get name, votes, photo url siihen if votes eniten 1 2 3 4 niin tallenna sen url tuohon muuttujaaan
+		return render_template("result.html", votes="votes", namesofphoto="namesofphoto", photourl="photourl")
+		
