@@ -16,17 +16,18 @@ CREATE TABLE Users (
 CREATE TABLE Threads (
 	id SERIAL PRIMARY KEY,
 	topic TEXT,
+	userid INTEGER REFERENCES Users ON DELETE CASCADE,
 	username TEXT,
-	userid INTEGER REFERENCES Users,
 	createdat TIMESTAMP,
-	tags TEXT
+	tags TEXT,
+	preview TEXT 
 );
 
 CREATE TABLE Messages (
 	id SERIAL PRIMARY KEY,
 	message TEXT,
-	userid INTEGER REFERENCES Users,
-	threadid INTEGER REFERENCES Threads,
+	userid INTEGER REFERENCES Users ON DELETE CASCADE,
+	threadid INTEGER REFERENCES Threads ON DELETE CASCADE,
 	username TEXT,
 	sentat TIMESTAMP
 );

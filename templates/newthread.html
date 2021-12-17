@@ -9,25 +9,48 @@
     <p></p>
 </div>
 
-<form action="/newthread" method="POST">
+<form action="/newthread" method="POST" onsubmit="return check(this)">
     Thread Topic: <input type="text" name="threadtopic">
     <p>
     Message:
     <p>
     <textarea name="threadmessage" rows="5" cols="50"></textarea>
-    <br>
-    Add a tag:
-    <Select name="tag">
-    <div class="dropdown">
-        {% for tag in taglist %}
-            <option value={{tag.tag}}>{{tag.tag}}</option>
-        {% endfor %}
-    </Select>
-    </div>
     <p>
-    <!-- add functionality to add a tag-->
+    Add a tag:<input type="text" name="tag">
+    
     <input type="submit" value="Send the first message">
+    <p>
 </form>
+
+
+        <!--Select name="tag">
+            <div class="dropdown">
+                {% for tag in taglist %}
+                    <option value={{tag.tag}}>{{tag.tag}}</option>
+                {% endfor %}
+        </Select-->
+
+<script>
+    function check(form) {
+        if (form.threadtopic.value.length>100){
+            alert("The topic is too long");
+            return false;
+        }
+        if (form.threadtopic.value.length<1){
+            alert("The topic is too short");
+            return false;
+        }
+        if (form.threadmessage.value.length>2500) {
+            alert("The message is too long");
+            return false;
+        }
+        if (form.threadmessage.value.length<1) {
+            alert("The message is too short");
+            return false;
+        }
+        return true;
+    }
+</script>
 
 {% else %}
 <div class="newthreadlogin">

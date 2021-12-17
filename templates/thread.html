@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Error{% endblock %}
+{% block title %}Threa{% endblock %}
 
 {% block content %}
 
@@ -26,11 +26,29 @@
 
 
 {% if session.userid %}
-<form action="/thread/{{threadid}}" method="POST">
-<p>Add a new message to thread: {{ threadid }}<br>
+<form action="/thread/{{threadid}}" method="POST" onsubmit="return check(this)">
+    <p>Add a new message to thread: {{ threadid }}<p>
     <textarea name="sentmessage" rows="5" cols="50"></textarea>
-<input type="submit" value="Send">
+    <input type="submit" value="Send">
 </form>
+
+
+<script>
+    function check(form) {
+        if (form.sentmessage.value.length>2000){
+            alert("The message is too long");
+            return false;
+        }
+        if (form.sentmessage.value.length<2){
+            console.log('hello')
+            alert("The message is too short");
+            return false;
+        }
+        return true;
+    }
+</script>
+
+
 {% else %}
 
 <br>

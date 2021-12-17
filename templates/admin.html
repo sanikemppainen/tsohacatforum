@@ -5,9 +5,20 @@
 
 <div class="adminmessage">
     {{ message }}
+    <p>
 </div>
-<div class="admindelete">
-    <!--poista käyttäjä, poista thread, poista viesti id mukaan-->
-</div>
+<!-- div class="adminphoto"></div-->
+
+<form action="/admin" method="POST" >
+    Delete user by typing in their username: <input type="text" name="username">
+    <p>Deleting a user will delete all of their messages and threads</p>
+    <p>
+    Delete a thread by typing in thread topic: <input type="text" name="thread">
+    <p>
+    <input type="submit" value="Delete">
+</form>
+
+
 
 {% endblock %}
+

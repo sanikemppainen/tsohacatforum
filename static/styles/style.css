@@ -51,6 +51,11 @@ nav ul{
     background-color: beige;
     margin-bottom: 1em;
 }
+.threadblock a{
+    font-size: 1.2em;
+    font-family: 'Times New Roman', Times, serif;
+    color: black;
+}
  
 .logout{
     font-size: 1.2em;
@@ -88,6 +93,13 @@ nav ul{
 .adminmessage{
     font-family: 'Times New Roman', Times, serif;
     font-size: 1.2em;
+    text-align: center;
+}
+.adminphoto{
+    content: url(/static/images/unlimitedpower.jpg);
+    align-content: center;
+}
+.admindelete{
     text-align: center;
 }
 .logoutpage{

@@ -6,6 +6,12 @@
  {% block content %}
  <div class="introtext">
     text text text text text text text text text text text text
+    <p>
+      There are {{ count }} topics on the site
+    </p>
+    <p>
+      The most commented thread is: <a href="/thread/{{ mostmessages[0].id }}" > {{ mostmessages[0].topic }} </a>
+    </p>
  </div>
  
  <div class="newthreadbutton">
@@ -18,20 +24,28 @@
 		<h2>Threads</h2>
 	</div>
 
-  <!--SELECT id, topic, userid, createdat-->
+<div class="search">
+  <form action="/searchresult" method="GET">
+    Search by: <input type="text" name="query">
+    <br>
+    <input type="submit" value="Search">
+    </form>    
+</div>
     
-    {% for thread in threads %}
-    <div class=threadblock>
-      <p>
-      Thread:  <a href="/thread/{{ thread.id }}"> {{ thread.topic }} </a>
-      <p>
-      Created at:  {{ thread.createdat }}
-      <p>
-      Creator: {{ thread.userid }}
-      <p>
-      Tags: {{ thread.tags }}
-    </div> 
-    {% endfor %}   
+  {% for thread in threads %}
+  <div class=threadblock>
+    <p>
+    Thread:  <a href="/thread/{{ thread.id }}"> {{ thread.topic }} </a>
+    <p>
+    Preview: {{ thread.preview }}
+    <p>
+    Created at:  {{ thread.createdat.strftime("%d-%m-%Y at %H:%M") }}
+    <p>                                         
+    Creator: {{ thread.username }}
+    <p>
+    Tags: {{ thread.tags }}
+ </div> 
+{% endfor %}   
   
 </p>
 <div class="logout">
