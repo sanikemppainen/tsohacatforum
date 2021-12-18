@@ -6,15 +6,16 @@ import users, threads, photos
 
 def addmessagetothread(message, id, pictureid):
     userid=users.userid()
-    picturename=photos.getpicturename(pictureid)
-    picturedata=photos.showphoto(picturename)
-
+    if pictureid!=None:
+        picturename=photos.getpicturename(pictureid)
+        picturedata=photos.showphoto(picturename)
+    if pictureid==None:
+        picturedata=None
     #threadid=threads.returnthreadid()
     threadid= id
     userid=users.userid()
     if userid==0:
         return False
-    #TÄMÄ EI MENE MESSAGEEN SINNE EI MENE USERNAME MUTTA USER TABLESSA USENAME MENEE 
     getusername=database.session.execute("SELECT username FROM Users WHERE id=:userid", {"userid":userid})
     username=getusername.fetchone()[0]
     database.session.execute("INSERT INTO Messages (message, userid, threadid, username, sentat, pictureid, picturedata) VALUES (:message, :userid, :threadid, :username, NOW(), :pictureid, :picturedata)", {"message": message, "userid": userid, "threadid": threadid, "username": username, "pictureid":pictureid, "picturedata":picturedata})

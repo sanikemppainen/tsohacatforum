@@ -77,11 +77,6 @@ def newthread():
 	else:
 		if session["csrf_token"] != request.form["csrf_token"]:
 			abort(403)
-		#ota tiedot, lisää threads databaseen, ohjaa etusivulle
-		#newtag=request.form["newtag"]
-		#if newtag!="":
-		#	tags=newtag
-		#else:
 		tags=request.form.get("tag")
 		threadtopic=request.form["threadtopic"]
 		threadmessage=request.form["threadmessage"]
@@ -90,7 +85,7 @@ def newthread():
 		photo=request.files["photo"]
 		name=photo.filename
 		response=""
-		pictureid=1
+		pictureid=None
 		if name!="":
 			if not name.endswith(".jpg"):
 				return render_template("error.html", message="Invalid filename. You can only send .jpg files")
@@ -122,7 +117,9 @@ def thread(id):
 		photo=request.files["photo"]
 		name=photo.filename
 		response=""
-		pictureid=1
+		pictureid=None
+		print(pictureid)
+		print("eka yllä")
 		if name!="":
 			if not name.endswith(".jpg"):
 				return render_template("error.html", message="Invalid filename. You can only send .jpg files")
@@ -134,6 +131,8 @@ def thread(id):
 			else:
 				return render_template("error.html", message="Error in adding photo")
 			pictureid=photos.getpictureid(name)
+			print(pictureid)
+
 		messages.addmessagetothread(sentmessage, threadid, pictureid)
 		list=threads.getid(id)
 		return render_template("thread.html", threadtopic=list[0], messages=list[1], threadid=id, response=response)

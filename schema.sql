@@ -2,8 +2,6 @@ CREATE TABLE Pictures (
 	id SERIAL PRIMARY KEY,
 	name TEXT,
 	data BYTEA,
-	permission INTEGER,
-	visible INTEGER
 );
 
 CREATE TABLE Users (
