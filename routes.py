@@ -196,8 +196,6 @@ def vote():
 	if request.method=="GET":
 		return render_template("vote.html")
 	else:
-		if session["csrf_token"] != request.form["csrf_token"]:
-			abort(403)
 		if "answer" in request.form:
 			nameofphoto=request.form["answer"]
 			list=votes.addvotes(nameofphoto)
