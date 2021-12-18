@@ -2,15 +2,13 @@ from logging import error
 from flask import render_template, request, redirect, session, url_for
 from app import app
 from os import getenv
-import threads, users, messages, vote, database
-
+import threads, users, messages, votes
 
 @app.route("/")
 def frontpage():
 	list=threads.getlist()
 	count=len(list)
 	mostmessages=messages.getmostmessages()
-	print(mostmessages)
 	return render_template("frontpage.html", threads=list, count=count, mostmessages=mostmessages)
 
 @app.route("/send", methods=["POST"])
@@ -117,12 +115,11 @@ def vote():
 	if request.method=="GET":
 		return render_template("vote.html")
 	else:
-		nameofphoto=request.form["answer"]
-
-		#vote.putvotes(nameofphoto)
-		#get name, votes, photo url siihen if votes eniten 1 2 3 4 niin tallenna sen url tuohon muuttujaaan
-
-		return render_template("result.html", votes="votes", nameofphoto="nameofphoto", photourl="photourl")
+		if "answer" in request.form:
+			nameofphoto=request.form["answer"]
+			list=votes.addvotes(nameofphoto)
+			photourl=f"{list[0].nameofphoto}.jpg"
+		return render_template("result.html", list=list, photourl=photourl)
 		
 @app.route("/searchresult")
 def result():

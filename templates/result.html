@@ -3,7 +3,13 @@
 
 {% block content %}
 <div class="result">
-   The cutest cat with {{ votes }} is {{ nameofphoto }}
-   <image src="{{ photourl }}"></image>
+   The cutest cat with {{ list[0].votes }} votes is {{ list[0].nameofphoto }}
+   <p>
+   <image src="/static/images/{{ photourl }}"></image>
 </div>
+
+<div class="returntofrontpage">
+    <a href="/">Return to frontpage</a>
+</div>
+
 {% endblock %}
