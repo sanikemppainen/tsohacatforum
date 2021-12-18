@@ -214,3 +214,39 @@ nav ul{
     padding-right: 1em ;
     font-size: 1em;
 }
+.foundmessages{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1em;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    background-color: beige;
+    overflow-wrap: break-word;
+    padding: 10px;
+    margin-bottom: 0.5em;
+
+}
+.foundthreads{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1em;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    background-color: beige;
+    overflow-wrap: break-word;
+    padding: 10px;
+    margin-bottom: 0.5em;
+
+}
+.foundtags{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1em;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    background-color: beige;
+    overflow-wrap: break-word;
+    padding: 10px;
+    margin-bottom: 0.5em;
+
+}

@@ -2,31 +2,34 @@
 {% block title %}Search results{% endblock %}
 
 {% block content %}
-
-<p>These messages were found when searching with the word "{{ query }}":</p>
-
-{% for foundmessage in foundmessages %}
 <div class="foundmessages">
+<p>These messages were found when searching with the word "{{ query }}":</p>
+{% for foundmessage in foundmessages %}
 {{ foundmessage.message }}  <a href="/thread/{{ foundmessage.threadid }}">Click here to go to the thread where the message is</a>
-</div>
+<p>
 {% endfor %}
 
+</div>
+
+<div class="foundthreads">
 
 <p>These threads were found when searching with the word "{{ query }}":</p>
-
 {% for foundthread in foundthreads %}
-<div class="foundthreads">
 {{ foundthread.topic }}  <a href="/thread/{{ foundthread.id }}">Click here to go to the thread</a>
-</div>
 {% endfor %}
+</div>
+<div class="foundtags">
 
 <p>These tags were found when searching with the word "{{ query }}":</p>
 
 {% for foundtag in foundtags %}
-<div class="foundtags">
-{{ foundtag.tags }}  <a href="/thread/{{ foundtag.id }}">Click here to go to the thread: {{ foundtag.topic }} </a>
-</div>
+{{ foundtag.tags }} 
+<p> 
+<a href="/thread/{{ foundtag.id }}">Click here to go to the thread: {{ foundtag.topic }} </a>
+
 {% endfor %}
+</div>
+
 <div class="returntofrontpage">
     <a href="/">Return to frontpage</a>
 </div>

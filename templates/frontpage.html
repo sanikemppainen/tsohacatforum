@@ -3,19 +3,21 @@
 {% block title %}Frontpage{% endblock %}
 
 <body>
+  
  {% block content %}
- 
- <div class="introtext">
-   Welcome to the Cat Forum, here you can talk about everything related to cats. Have a look at the threads down below or create your own. 
-   Don't forget to vote for your favourite cat.
- </div>
-
  {% if session.userid %}
  <div class="loggedin">
      You are logged in as: {{ session.username }}
  </div>
 {% endif %} 
 
+ 
+ <div class="introtext">
+   Welcome to the Cat Forum, here you can talk about everything related to cats. Have a look at the threads down below or create your own. 
+   Don't forget to vote for your favourite cat.
+ </div>
+
+ 
   <div class="threads">
 		<h2>Threads</h2>
 	</div>
