@@ -12,9 +12,9 @@ def frontpage():
 	list=threads.getlist()
 	count=len(list)
 	mostmessages=messages.getmostmessages()
-	if session["number"]==None:
+	if session.get("number")==None:
 		session["number"]=10
-		number=5
+		number=10
 	else:
 		number=session["number"]
 	newlist=[]
@@ -25,6 +25,8 @@ def frontpage():
 			n=n+1
 	if len(list)>len(newlist):
 		showmore="... change number of threads shown on page to see more"
+	else:
+		showmore=""
 	return render_template("frontpage.html", threads=newlist, count=count, mostmessages=mostmessages, showmore=showmore)
 
 @app.route("/send", methods=["POST"])

@@ -27,6 +27,7 @@ def login(username, password):
             session["userid"]=user.id
             session["admin"]=user.admin
             session["username"]=user.username
+            
             return True
         else:
             return False
@@ -52,10 +53,10 @@ def admincheck():
 
 def logout():
     del session["userid"]
-    #del session["username"]
-    #del session["admin"]
-    #del session["csrf_token"]
-    #del session["number"]
+    del session["username"]
+    del session["admin"]
+    del session["csrf_token"]
+    del session["number"]
 
 def deleteuser(username):
     try:
