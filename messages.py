@@ -1,11 +1,14 @@
 from flask import session
 import flask_sqlalchemy
 from database import database
-import users, threads
+import users, threads, photos
 
 
-def addmessagetothread(message, id):
+def addmessagetothread(message, id, pictureid):
     userid=users.userid()
+    picturename=photos.getpicturename(pictureid)
+    picturedata=photos.showphoto(picturename)
+
     #threadid=threads.returnthreadid()
     threadid= id
     userid=users.userid()
@@ -14,7 +17,7 @@ def addmessagetothread(message, id):
     #TÄMÄ EI MENE MESSAGEEN SINNE EI MENE USERNAME MUTTA USER TABLESSA USENAME MENEE 
     getusername=database.session.execute("SELECT username FROM Users WHERE id=:userid", {"userid":userid})
     username=getusername.fetchone()[0]
-    database.session.execute("INSERT INTO Messages (message, userid, threadid, username, sentat) VALUES (:message, :userid, :threadid, :username, NOW())", {"message": message, "userid": userid, "threadid": threadid, "username": username})
+    database.session.execute("INSERT INTO Messages (message, userid, threadid, username, sentat, pictureid, picturedata) VALUES (:message, :userid, :threadid, :username, NOW(), :pictureid, :picturedata)", {"message": message, "userid": userid, "threadid": threadid, "username": username, "pictureid":pictureid, "picturedata":picturedata})
     database.session.commit()
     return True
 

@@ -1,7 +1,7 @@
 body {
     margin: auto;
     padding: 1em 1em;
-    max-width: 90em;
+    max-width: 98em;
     font-family: 'Times New Roman', 'Arial', sans-serif;
 }
 nav li {
@@ -38,6 +38,9 @@ nav ul{
 .introtext{
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
+    padding-left: 3em;
+    font-size: 1.2em;
+
 }
 .newthreadbutton{
     display: block;
@@ -50,11 +53,13 @@ nav ul{
     border-color: black;
     background-color: beige;
     margin-bottom: 1em;
+    padding-left: 5px;
 }
 .threadblock a{
-    font-size: 1.2em;
+    font-size: 1.6em;
     font-family: 'Times New Roman', Times, serif;
     color: black;
+    padding: 10px;
 }
  
 .logout{
@@ -68,6 +73,16 @@ nav ul{
     background-color: beige;
     border-radius: .5em;
     padding: 0 .4em;
+}
+.threads {
+    font-size: 1.2em;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+.howmanytopics{
+    font-size: 1.2em;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
 }
 
 .registerifnot{
@@ -158,15 +173,44 @@ nav ul{
 .threadmessages{
     font-family: 'Times New Roman', Times, serif;
     font-size: 1em;
-    text-align: left;
     border-width: 2px;
     border-style: solid;
     border-color: black;
     background-color: beige;
-    margin-bottom: 1em;
-   overflow-wrap: break-word;
+    margin-bottom: 0.5em;
+    overflow-wrap: break-word;
+    text-align: float;
 }
 .threadmessages label#sentat {
-    align-items: right;
+    display: block;
     text-align: right;
+    padding-right: 1em ;
+}
+.threadmessages label#username {
+    display: block;
+    text-align: right;
+    padding-right: 1em ;
+}
+.threadmessages label#message {
+    display: block;
+    text-align: left;
+    padding-right: 2em ;
+}
+
+.threadmessages img{
+    width: 24%;
+    margin: 5px 5px 5px 5px;
+
+}
+.smallerinfo {
+    display: block;
+    text-align: right;
+    padding-right: 1em ;
+    font-size: 1em;
+}
+.search{
+    display: block;
+    text-align: right;
+    padding-right: 1em ;
+    font-size: 1em;
 }

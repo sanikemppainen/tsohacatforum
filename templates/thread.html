@@ -11,28 +11,31 @@
 {% for message in messages %}
     <div class="threadmessages">
         <ul>
-            <li>
+            Message:
             <label id="message">{{ message.message }}</label>
             <p>
-            <label id="username">{{ message.username }}</label>
+                {% if message.picturedata != None %}
+                    <img src="data:image/jpeg;base64, {{ message.picturedata }} "><img>
+                {% endif %}
+                <p>        
+            <label id="username">Sent by: {{ message.username }}</label>
             <p>
             <label id="sentat">{{ message.sentat }}</label>
-            </li>
         </ul>
     </div>
     {% endfor %}
     <hr>    
 
 
-
 {% if session.userid %}
-<form action="/thread/{{threadid}}" method="POST" onsubmit="return check(this)">
+<form action="/thread/{{threadid}}" method="POST" enctype="multipart/form-data" onsubmit="return check(this)">
     <p>Add a new message to thread: {{ threadid }}<p>
     <textarea name="sentmessage" rows="5" cols="50"></textarea>
+    Add a photo: <input type="file" name="photo">
+    <p>
     <input type="submit" value="Send">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-
-</form>
+    </form>
 
 
 <script>

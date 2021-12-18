@@ -2,7 +2,7 @@ from logging import error
 from flask import render_template, request, redirect, session, abort
 from app import app
 from os import getenv
-import threads, users, messages, votes
+import threads, users, messages, votes, photos
 
 @app.route("/", methods=["GET", "POST"])
 def frontpage():
@@ -101,9 +101,44 @@ def thread(id):
 		#check sentmessage ja topic
 		sentmessage=request.form["sentmessage"]
 		threadid=id
-		messages.addmessagetothread(sentmessage, threadid)
-		list=threads.getid(id)		
-		return render_template("thread.html", threadtopic=list[0], messages=list[1], threadid=id)
+		
+		photo=request.files["photo"]
+		name=photo.filename
+		response=""
+		pictureid=1
+		if name!="":
+			if not name.endswith(".jpg"):
+				return render_template("error.html", message="Invalid filename. You can only send .jpg files")
+			data=photo.read()
+			if len(data)>1000*1024:
+				return render_template("error.html", message="The file is too big")
+			if photos.addphoto(name, data):
+				response=photos.showphoto(name)
+			else:
+				return render_template("error.html", message="Error in adding photo")
+			pictureid=photos.getpictureid(name)
+		messages.addmessagetothread(sentmessage, threadid, pictureid)
+		list=threads.getid(id)
+		return render_template("thread.html", threadtopic=list[0], messages=list[1], threadid=id, response=response)
+
+@app.route("/sendphoto", methods=["POST"])
+def sendphoto():
+		if session["csrf_token"] != request.form["csrf_token"]:
+			abort(403)
+		photo=request.files["photo"]
+		name=photo.filename
+		if not name.endswith(".jpg"):
+			return render_template("error.html", message="Invalid filename. You can only send .jpg files")
+		data=photo.read()
+		if len(data)>100*1024:
+			return render_template("error.html", message="The file is too big")
+		if photos.addphoto(name, data):
+			response=photos.showphoto(name)
+		else:
+			return render_template("error.html", message="Error in adding photo")
+		return render_template("thread.html", response=response)
+
+
 
 @app.route("/logout")
 def logout():

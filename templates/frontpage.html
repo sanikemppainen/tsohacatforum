@@ -4,25 +4,28 @@
 
 <body>
  {% block content %}
- <div class="introtext">
-    text text text text text text text text text text text text
-    <p>
-      There are {{ count }} topics on the site
-    </p>
-    <p>
-      The most commented thread is: <a href="/thread/{{ mostmessages[0].id }}" > {{ mostmessages[0].topic }} </a>
-    </p>
- </div>
  
- <div class="newthreadbutton">
-		<a href="/newthread">
-			<button type="button">Create a new thread</button>
-		</a>
-	</div>
+ <div class="introtext">
+   Welcome to the Cat Forum, here you can talk about everything related to cats. Have a look at the threads down below or create your own. 
+   Don't forget to vote for your favourite cat.
+ </div>
+
+ {% if session.userid %}
+ <div class="loggedin">
+     You are logged in as: {{ session.username }}
+ </div>
+{% endif %} 
 
   <div class="threads">
 		<h2>Threads</h2>
 	</div>
+
+  <div class="howmanytopics">
+    <p>
+      There are {{ count }} topics on the site. 
+      The most commented thread is: <a href="/thread/{{ mostmessages[0].id }}" > {{ mostmessages[0].topic }} </a>
+    </p>
+  </div>
 
 <div class="search">
   <form action="/searchresult" method="GET">
@@ -32,6 +35,11 @@
     </form>    
 </div>
 
+<div class="newthreadbutton">
+  <a href="/newthread">
+    <button type="button">Create a new thread</button>
+  </a>
+</div>
 
 <form action="/selectnumber" method="POST">
   <label for="choosenumber">How many threads per page:</label>
@@ -44,20 +52,21 @@
    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 </div>
-{{ session.number }}
-  
+<br>
   {% for thread in threads %}
   <div class=threadblock>
     <p>
-    Thread:  <a href="/thread/{{ thread.id }}"> {{ thread.topic }} </a>
+    <a href="/thread/{{ thread.id }}"> {{ thread.topic }} </a>
     <p>
-    Preview: {{ thread.preview }}
+    {{ thread.preview }}
     <p>
-    Created at:  {{ thread.createdat.strftime("%d-%m-%Y at %H:%M") }}
-    <p>                                         
-    Creator: {{ thread.username }}
-    <p>
-    Tags: {{ thread.tags }}
+    <div class="smallerinfo">
+      Created at:  {{ thread.createdat.strftime("%d-%m-%Y at %H:%M") }}
+      <p>                                         
+      Creator: {{ thread.username }}
+      <p>
+      Tags: {{ thread.tags }}
+    </div>
  </div> 
 {% endfor %}   
 {{ showmore }}

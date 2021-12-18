@@ -29,7 +29,9 @@ CREATE TABLE Messages (
 	userid INTEGER REFERENCES Users ON DELETE CASCADE,
 	threadid INTEGER REFERENCES Threads ON DELETE CASCADE,
 	username TEXT,
-	sentat TIMESTAMP
+	sentat TIMESTAMP,
+	pictureid INTEGER REFERENCES Pictures ON DELETE CASCADE,
+	picturedata TEXT
 );
 
 CREATE TABLE Votes (

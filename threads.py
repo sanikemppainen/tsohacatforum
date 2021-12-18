@@ -32,8 +32,10 @@ def getlist():
 def getid(id):
 	result=database.session.execute("SELECT topic, id FROM Threads WHERE id=:id", {"id":id})
 	threadtopic=result.fetchone()[0]
-	result2=database.session.execute("SELECT message, username, sentat FROM Messages WHERE Messages.threadid =:id ORDER BY id ASC", {"id":id})
+	result2=database.session.execute("SELECT message, username, sentat, picturedata FROM Messages WHERE Messages.threadid =:id ORDER BY id ASC", {"id":id})
 	messages=result2.fetchall()
+	#loop thrpugh messsages to get pictureid and pictures for them if they have, then add to newlist and send that back??
+
 	#print(messages)
 	list=[threadtopic, messages]
 	return list
