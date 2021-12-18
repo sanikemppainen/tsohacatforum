@@ -1,18 +1,36 @@
 from logging import error
-from flask import render_template, request, redirect, session, url_for
+from flask import render_template, request, redirect, session, abort
 from app import app
 from os import getenv
 import threads, users, messages, votes
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def frontpage():
+	if request.method=="POST":
+		if session["csrf_token"] != request.form["csrf_token"]:
+			abort(403)
 	list=threads.getlist()
 	count=len(list)
 	mostmessages=messages.getmostmessages()
-	return render_template("frontpage.html", threads=list, count=count, mostmessages=mostmessages)
+	if session["number"]==None:
+		session["number"]=10
+		number=5
+	else:
+		number=session["number"]
+	newlist=[]
+	n=0
+	for i in list :
+		if n<int(number):
+			newlist.append(i)
+			n=n+1
+	if len(list)>len(newlist):
+		showmore="... change number of threads shown on page to see more"
+	return render_template("frontpage.html", threads=newlist, count=count, mostmessages=mostmessages, showmore=showmore)
 
 @app.route("/send", methods=["POST"])
 def send():
+	if session["csrf_token"] != request.form["csrf_token"]:
+			abort(403)
 	content=request.form["content"]
 	threadid=request.form["threadid"]
 	username=request.form["username"]
@@ -26,6 +44,7 @@ def login():
 	if request.method=="GET":
 		return render_template("login.html")
 	else:
+		
 		username=request.form["username"]
 		password=request.form["password"]
 		if users.login(username, password):
@@ -54,6 +73,8 @@ def newthread():
 		taglist=threads.gettags()
 		return render_template("newthread.html", taglist=taglist)
 	else:
+		if session["csrf_token"] != request.form["csrf_token"]:
+			abort(403)
 		#ota tiedot, lisää threads databaseen, ohjaa etusivulle
 		#newtag=request.form["newtag"]
 		#if newtag!="":
@@ -72,6 +93,8 @@ def thread(id):
 		list=threads.getid(id)
 		return render_template("thread.html", threadtopic=list[0], messages=list[1], threadid=id)
 	else:
+		if session["csrf_token"] != request.form["csrf_token"]:
+			abort(403)
 		#if liian pitkä kato osa 4 älä laita viestiä databaseewn
 		#check sentmessage ja topic
 		sentmessage=request.form["sentmessage"]
@@ -98,6 +121,8 @@ def admin():
 			return render_template("error.html", message="no rights here")
 	#collects info on what to delete and send that info as render template to delete page 
 	else:
+		if session["csrf_token"] != request.form["csrf_token"]:
+			abort(403)
 		username=request.form["username"]
 		thread=request.form["thread"]
 		if username !="":
@@ -108,6 +133,9 @@ def admin():
 
 @app.route("/delete", methods=["GET", "POST"])
 def delete():
+	if request.method=="POST":
+		if session["csrf_token"] != request.form["csrf_token"]:
+			abort(403)
 	return render_template("admin.html", message="Deleted succesfully or wrong info")
 
 @app.route("/vote", methods=["GET", "POST"])
@@ -115,6 +143,8 @@ def vote():
 	if request.method=="GET":
 		return render_template("vote.html")
 	else:
+		if session["csrf_token"] != request.form["csrf_token"]:
+			abort(403)
 		if "answer" in request.form:
 			nameofphoto=request.form["answer"]
 			list=votes.addvotes(nameofphoto)
@@ -128,3 +158,12 @@ def result():
 	foundthreads=threads.searchthreads(query)
 	foundtags=threads.searchtags(query)
 	return render_template("searchresult.html", foundtags=foundtags, foundmessages=foundmessages, foundthreads=foundthreads, query=query)
+
+@app.route("/selectnumber", methods=["POST"])
+def selectnumber():
+	if session["csrf_token"] != request.form["csrf_token"]:
+			abort(403)
+	number=request.form["number"]
+	session["number"]=number
+	#return render_template("frontpage.html", number=number)
+	return redirect("/")

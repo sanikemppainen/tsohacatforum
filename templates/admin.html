@@ -16,6 +16,7 @@
     Delete a thread by typing in thread topic: <input type="text" name="thread">
     <p>
     <input type="submit" value="Delete">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 
 

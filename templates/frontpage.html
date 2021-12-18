@@ -31,7 +31,21 @@
     <input type="submit" value="Search">
     </form>    
 </div>
-    
+
+
+<form action="/selectnumber" method="POST">
+  <label for="choosenumber">How many threads per page:</label>
+   <Select name="number">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+   </Select>
+   <input type="submit" value="Update">
+   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+</div>
+{{ session.number }}
+  
   {% for thread in threads %}
   <div class=threadblock>
     <p>
@@ -46,7 +60,7 @@
     Tags: {{ thread.tags }}
  </div> 
 {% endfor %}   
-  
+{{ showmore }}
 </p>
 <div class="logout">
   You can logout <a href="/logout">here</a>

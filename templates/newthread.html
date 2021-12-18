@@ -19,6 +19,8 @@
     Add a tag:<input type="text" name="tag">
     
     <input type="submit" value="Send the first message">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
     <p>
 </form>
 

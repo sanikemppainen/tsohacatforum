@@ -2,6 +2,15 @@
 {% block title %}Register{% endblock %}
 
 {% block content %}
+
+{% if session.userid %}
+<div class="loggedin">
+    <p>You are already logged in as: {{ session.username }}</p>
+    <p>Make sure to logout before registering a new user</p>
+    <a href="/logout">Log out</a>
+</div>
+{% else %}
+
 <form action="/register" method="POST">
     Username: <input type="text" name="username">
     <p>
@@ -13,4 +22,6 @@
     <p>
     <input type="submit" value="Register">
     </form>
+    {% endif %}   
+
 {% endblock %}

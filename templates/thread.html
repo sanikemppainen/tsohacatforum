@@ -30,6 +30,8 @@
     <p>Add a new message to thread: {{ threadid }}<p>
     <textarea name="sentmessage" rows="5" cols="50"></textarea>
     <input type="submit" value="Send">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
 </form>
 
 
