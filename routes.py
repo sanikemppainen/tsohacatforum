@@ -86,7 +86,24 @@ def newthread():
 		threadtopic=request.form["threadtopic"]
 		threadmessage=request.form["threadmessage"]
 		username=session.get("username")
-		threads.send(threadtopic, tags, threadmessage, username)
+
+		photo=request.files["photo"]
+		name=photo.filename
+		response=""
+		pictureid=1
+		if name!="":
+			if not name.endswith(".jpg"):
+				return render_template("error.html", message="Invalid filename. You can only send .jpg files")
+			data=photo.read()
+			if len(data)>1000*1024:
+				return render_template("error.html", message="The file is too big")
+			if photos.addphoto(name, data):
+				response=photos.showphoto(name)
+			else:
+				return render_template("error.html", message="Error in adding photo")
+			pictureid=photos.getpictureid(name)
+
+		threads.send(threadtopic, tags, threadmessage, username, pictureid)
 		return redirect("/")	
 
 @app.route("/thread/<int:id>", methods=["GET", "POST"])

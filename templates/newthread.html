@@ -8,8 +8,9 @@
     Create a new thread by sending the first message:
     <p></p>
 </div>
+{% if session.userid %}
 
-<form action="/newthread" method="POST" onsubmit="return check(this)">
+<form action="/newthread" method="POST" enctype="multipart/form-data" onsubmit="return check(this)">
     Thread Topic: <input type="text" name="threadtopic">
     <p>
     Message:
@@ -17,20 +18,16 @@
     <textarea name="threadmessage" rows="5" cols="50"></textarea>
     <p>
     Add a tag:<input type="text" name="tag">
-    
+    <p>
+    Add a photo: <input type="file" name="photo">
+ 
     <input type="submit" value="Send the first message">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 
     <p>
 </form>
+{% endif %}
 
-
-        <!--Select name="tag">
-            <div class="dropdown">
-                {% for tag in taglist %}
-                    <option value={{tag.tag}}>{{tag.tag}}</option>
-                {% endfor %}
-        </Select-->
 
 <script>
     function check(form) {

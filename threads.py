@@ -2,7 +2,7 @@ from flask import session
 from database import database
 import users, messages
 
-def send(topic, tags, message, username):
+def send(topic, tags, message, username, pictureid):
 	#jos threadia ei vielä ole, luo uusi ja lähetä sinne eka viesti
 	# userid=users.userid(), if userid==0; return false
 	userid=users.userid()
@@ -15,7 +15,7 @@ def send(topic, tags, message, username):
 	database.session.commit()
 	getthreadid=database.session.execute("SELECT id FROM Threads WHERE topic=:topic", {"topic":topic})
 	threadid=getthreadid.fetchone()[0]
-	messages.addmessagetothread(message, threadid)	
+	messages.addmessagetothread(message, threadid, pictureid)	
 	return True
 
 #lisää että näkee montako threadia on yhteensä
