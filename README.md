@@ -37,6 +37,10 @@ In addition to previously mentioned functions, admin user can also:
   <li>Delete users and/or threads by username or thread topic name
 </ul>
 
+Admin functionality can be tested with the following user:
+username: adm
+password: adm
+
 ## User experience
 User experience has been taken into consideration when creating the forum. For example, if the user is trying to register a new user or log in whilst already being logged in, the website sends a message informing that this is not possible. There is also a browser warning if the user tries to create a thread or send a message without a topic or a message.
 
