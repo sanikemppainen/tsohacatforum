@@ -257,3 +257,8 @@ nav ul{
     margin-bottom: 0.5em;
 
 }
+.loggedin{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.2em;
+    text-align: center;
+}

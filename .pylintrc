@@ -1,0 +1,7 @@
+[MESSAGES CONTROL]
+
+disable=missing-function-docstring,
+        import-error,
+        cyclic-import,
+	no-member
+	
