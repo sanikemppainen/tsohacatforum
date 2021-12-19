@@ -3,7 +3,6 @@
 {% block title %}Frontpage{% endblock %}
 
 <body>
-  
  {% block content %}
  {% if session.userid %}
  <div class="loggedin">
@@ -11,12 +10,10 @@
  </div>
 {% endif %} 
 
- 
  <div class="introtext">
    Welcome to the Cat Forum, here you can talk about everything related to cats. Have a look at the threads down below or create your own. 
    Don't forget to vote for your favourite cat.
  </div>
-
  
   <div class="threads">
 		<h2>Threads</h2>
@@ -51,7 +48,6 @@
           <option value="20">20</option>
    </Select>
    <input type="submit" value="Update">
-   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 </div>
 <br>

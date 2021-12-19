@@ -12,9 +12,6 @@ import photos
 @app.route("/", methods=["GET", "POST"])
 def frontpage():
 	#displays frontpage, checks csrf, gets list of threads to display
-    if request.method == "POST":
-        if session["csrf_token"] != request.form["csrf_token"]:
-            abort(403)
     list = threads.get_list()
     count = len(list)
     mostmessages = messages.get_most_messages()
@@ -223,8 +220,6 @@ def result():
 @app.route("/selectnumber", methods=["POST"])
 def selectnumber():
 	#how many threads shown on frontpage
-    if session["csrf_token"] != request.form["csrf_token"]:
-        abort(403)
     number = request.form["number"]
     session["number"] = number
     return redirect("/")
